@@ -7,6 +7,8 @@ class Circle:
     def __init__(self, x, y):
         '''Create a new circle at the given x,y point with a random speed, color, and size.'''
 
+ 
+
         self.x = x
         self.y = y
         self.x_speed = random.randint(-5,5)
@@ -15,7 +17,7 @@ class Circle:
         # we draw it with an outline, so we'll be able to see it on a white background regardless
         self.color = '#{0:0>6x}'.format(random.randint(00,16**6))
         self.size = random.randint(5,75)
-        self.shape = random.randint(1,3)
+        self.shape = random.randint(1,2)
 
     def update(self):
         '''Update current location by speed.'''
@@ -23,19 +25,34 @@ class Circle:
         self.x += self.x_speed
         self.y += self.y_speed
 
+        if self.x < 0 :
+            self.x_speed = random.randint(0,5)
+        if self.x > (400 - self.size) :
+            self.x_speed = random.randint(-5,0)
+        if self.y < 0:
+            self.y_speed = random.randint(0,5)
+        if self.y > (400 - self.size):
+            self.y_speed = random.randint(-5,0)
+
+
+       
+            
+            
+        
+        
+
+            
     def draw(self, canvas):
         '''Draw self on the canvas.'''
 
         if self.shape == 1:
             canvas.create_oval(self.x, self.y, self.x + self.size, self.y + self.size,
                            fill=self.color, outline="black")
-        if self.shape == 2:
+        else:
             canvas.create_rectangle(self.x, self.y, self.x + self.size, self.y + self.size,
                    fill=self.color, outline="black")
 
-        if self.shape == 3:
-            canvas.create_arc(self.x, self.y, self.x + self.size, self.y + self.size,
-                   fill=self.color, outline="black")
+       
 
 
 def addCircle(event):
@@ -43,10 +60,14 @@ def addCircle(event):
 
     global game_objects
 
-    circlex = random.randint(0,400)
-    circley = random.randint(0,400)
-    game_objects.append(Circle(circlex, circley))
+    circlex = random.randint(0,350)
+    circley = random.randint(0,350)
 
+ 
+    game_objects.append(Circle(circlex, circley))
+    
+ 
+    
 
 def reset(event):
     '''Clear all game objects.'''
@@ -73,6 +94,8 @@ def draw(canvas):
 # they want to use the functions or classes you've defined, it won't start running your game
 # automatically
 if __name__ == '__main__':
+
+
 
     # create the graphics root and a 400x400 canvas
     root = Tkinter.Tk()
