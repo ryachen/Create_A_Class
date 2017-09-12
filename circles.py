@@ -36,6 +36,19 @@ class Shape:
         if self.y > (400 - self.size):
             self.y_speed = random.randint(-5,0)
 
+        ##Collision detection
+        if canvas.find_overlapping(self.x, self. y, self.x + self.size, self.y + self.size):
+
+                
+                self.x_speed = -1.5 * self.x_speed
+                self.y_speed = -1.5 * self.y_speed
+                
+ 
+            
+            
+ 
+        
+
 
 class Circle(Shape):
 
@@ -49,6 +62,8 @@ class Square(Shape):
         '''Draw self on the canvas.'''
         canvas.create_rectangle(self.x, self.y, self.x + self.size, self.y + self.size,
                            fill=self.color, outline="black")
+
+
 class SpecialSquare(Shape):
 
     def update(self):
@@ -69,7 +84,7 @@ class SpecialSquare(Shape):
         else:
             self.x_speed = 5
             self.y_speed = 5
-
+ 
 
 
 
@@ -121,11 +136,13 @@ def draw(canvas):
     '''Clear the canvas, have all game objects update and redraw, then set up the next draw.'''
 
     canvas.delete(Tkinter.ALL)
+    
 
     global game_objects
     for game_object in game_objects:
         game_object.update()
         game_object.draw(canvas)
+    
 
     delay = 33 # milliseconds, so about 30 frames per second
     canvas.after(delay, draw, canvas) # call this draw function with the canvas argument again after the delay
